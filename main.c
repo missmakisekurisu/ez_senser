@@ -15,7 +15,8 @@ static void display_humidity_temperature(void){
         OLED_ShowNum(80,0,recDataDHT11[0],2,16);
         OLED_ShowString(0,0,humidity_char, 16);
         OLED_ShowNum(80,2,recDataDHT11[2],2,16);
-        OLED_ShowString(1,2,heat_char, 16);
+        OLED_ShowString(0,2,heat_char, 16);
+				OLED_ShowString(0,4,c_char, 16);
     }
 }
 int main(){
