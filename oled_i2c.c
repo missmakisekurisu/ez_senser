@@ -174,4 +174,11 @@ void ssd1306_init(void){
         }
 	} //更新显示
 }
+
+void oled_i2c_init(void){
+
+}
+void HAL_I2C_Mem_Write(uint8_t DevAddress, uint8_t MemAddress,uint8_t *pData, uint16_t Size){
+
+}
 #endif

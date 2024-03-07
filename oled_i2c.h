@@ -17,12 +17,6 @@
 
 #define I2C_Speed              400000  
 
-
-
-
-void oled_i2c_init(void);
-void HAL_I2C_Mem_Write(uint8_t DevAddress, uint8_t MemAddress,uint8_t *pData, uint16_t Size);
-
 #else
 #define             SI2C_GPIO_SCL                        RCC_APB2Periph_GPIOB
 #define             SI2C_GPIO_APBxClock_FUN              RCC_APB2PeriphClockCmd
@@ -34,6 +28,8 @@ void HAL_I2C_Mem_Write(uint8_t DevAddress, uint8_t MemAddress,uint8_t *pData, ui
 void sim_i2c_gpio_init_transmit(void);
 void sim_i2c_gpio_init_receive(void);
 void ssd1306_init(void);
-
 #endif
+
+void oled_i2c_init(void);
+void HAL_I2C_Mem_Write(uint8_t DevAddress, uint8_t MemAddress,uint8_t *pData, uint16_t Size);
 #endif

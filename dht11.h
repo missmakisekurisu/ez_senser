@@ -14,9 +14,9 @@ void DHT11_Start(void);
 unsigned char DHT11_REC_Byte(void);
 void DHT11_REC_Data(void);
 #else
-#define            DHT11_SDA_PORT           GPIOB
-#define            DHT11_SDA_PIN            GPIO_Pin_11
-#define            DHT11_SDA_CLK_SRC            RCC_APB2Periph_GPIOB
+#define            DHT11_SDA_PORT           GPIOA
+#define            DHT11_SDA_PIN            GPIO_Pin_7
+#define            DHT11_SDA_CLK_SRC            RCC_APB2Periph_GPIOA
 #define            DHT11_SDA_APBxClock_FUN      RCC_APB2PeriphClockCmd
 
 #define SET_PIN_DHT11   GPIO_SetBits(DHT11_SDA_PORT, DHT11_SDA_PIN)
