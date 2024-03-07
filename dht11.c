@@ -123,25 +123,24 @@ void DHT11_REC_Data(void)
 uint8_t recDataDHT11[5] = {0};
 
 static void master_output_init(void){
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
+    DHT11_SDA_APBxClock_FUN(DHT11_SDA_CLK_SRC, ENABLE);
     GPIO_InitTypeDef GPIO_InitStructure = {
-        .GPIO_Pin = GPIO_Pin_12,
+        .GPIO_Pin = DHT11_SDA_PIN,
         .GPIO_Speed = GPIO_Speed_50MHz,
         .GPIO_Mode = GPIO_Mode_Out_PP,
     };
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
+	GPIO_Init(DHT11_SDA_PORT, &GPIO_InitStructure);
 }
 
 
 static void master_receive_init(void){
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
+    DHT11_SDA_APBxClock_FUN(DHT11_SDA_CLK_SRC, ENABLE);
     GPIO_InitTypeDef GPIO_InitStructure = {
-        .GPIO_Pin = GPIO_Pin_12,
+        .GPIO_Pin = DHT11_SDA_PIN,
         .GPIO_Speed = GPIO_Speed_50MHz,
-//        .GPIO_Mode = GPIO_Mode_IN_FLOATING,
         .GPIO_Mode = GPIO_Mode_IPU,
     };
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
+	GPIO_Init(DHT11_SDA_PORT, &GPIO_InitStructure);
 }	
 
 
