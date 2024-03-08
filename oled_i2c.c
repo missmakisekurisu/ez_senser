@@ -70,6 +70,8 @@ void HAL_I2C_Mem_Write(uint8_t DevAddress, uint8_t MemAddress,uint8_t *pData, ui
 #define RESET_SCL     GPIO_ResetBits(SI2C_PORT, SI2C_SCL_PIN)
 #define SET_SDA       GPIO_SetBits(SI2C_PORT, SI2C_SDA_PIN)
 #define RESET_SDA     GPIO_ResetBits(SI2C_PORT, SI2C_SDA_PIN)
+#define READ_SDA      GPIO_ReadInputDataBit(SI2C_PORT, SI2C_SDA_PIN)
+
 
 #define SI2C_HALF_PERIOD    (1U)
 #define SI2C_GENERATE_START {SET_SCL;SET_SDA;delay_us(SI2C_HALF_PERIOD);RESET_SDA;    RESET_SCL;delay_us(SI2C_HALF_PERIOD);}
@@ -105,14 +107,26 @@ static void sim_i2c_gpio_init_receive(void)
 static void sim_i2c_send_8bit(uint8_t data){
     for(uint8_t i = 0; i < 8; i++, data <<=1){        
         if(data & 0x80){SET_SDA;}else{RESET_SDA;}         
-        //delay_us(1U);
         SET_SCL;
         delay_us(SI2C_HALF_PERIOD);
         RESET_SCL;
         delay_us(SI2C_HALF_PERIOD);        
-    }
-//    sim_i2c_gpio_init_receive();    
+    }  
     SI2C_IGNORE_ACK  
+}
+
+static uint8_t sim_i2c_receive_8bit(uint8_t data){
+    uint8_t recData = 0U;
+    sim_i2c_gpio_init_receive();
+    for(uint8_t i = 0; i < 8; i++, data <<=1){               
+        SET_SCL;
+        delay_us(SI2C_HALF_PERIOD);
+        recData |= READ_SDA << (7-i);
+        RESET_SCL;
+        delay_us(SI2C_HALF_PERIOD);        
+    }  
+    SI2C_IGNORE_ACK  
+    return recData;
 }
 
 static void sim_i2c_transmit(uint8_t slaveAddr, uint8_t *data, uint8_t size){
@@ -135,11 +149,11 @@ static void sim_i2c_transmit_mem(uint8_t slaveAddr, uint8_t memAddr, uint8_t *da
 }
 
 static void ssd1306_wr_cmd(uint8_t cmd){
-    sim_i2c_transmit_mem(SSD1306_ADDR, 0x00, &cmd, 1U);
+    sim_i2c_transmit_mem(SSD1306_ADDR, 0x00, &cmd, 1);
 }
 
-static void ssd1306_wr_data(uint8_t *data, uint16_t size){
-    sim_i2c_transmit_mem(SSD1306_ADDR, 0x40, data, size);
+static void ssd1306_wr_data(uint8_t data){
+    sim_i2c_transmit_mem(SSD1306_ADDR, 0x40,& data, 1);
 }
 
 
@@ -155,19 +169,38 @@ static void ssd1306_init(void){
     for(uint8_t i = 0; i < 27U; i++){
         ssd1306_wr_cmd(CMD_Data[i]);
     } 
+}
+
+void ssd1306_generate_a_frame(uint8_t *p, uint16_t size){
+    ssd1306_wr_cmd(0x20); 
+    ssd1306_wr_cmd(0x00);         		
+    //column 0~127
+    ssd1306_wr_cmd(0x21); 
+    ssd1306_wr_cmd(0x00); 
+    ssd1306_wr_cmd(0x7F); 
+    //page 0~7
+    ssd1306_wr_cmd(0x22); 
+    ssd1306_wr_cmd(0x00); 
+    ssd1306_wr_cmd(0x07);     
+    for(uint16_t i = 0; i< size;i++){
+        ssd1306_wr_data(p[i]);
+    }
     
-    uint8_t j,n, data;	
-    data = 0U;
-	for(j=0;j<8;j++)  
-	{  
-		ssd1306_wr_cmd(0xb0+j);    //设置页地址（0~7）
-		ssd1306_wr_cmd(0x00);      //设置显示位置—列低地址
-		ssd1306_wr_cmd(0x10);      //设置显示位置—列高地址   
-		for(n=0;n<128;n++){
-			ssd1306_wr_data(&data,1); 
-        }
-	}
-    
+//    //column 0~127
+//    cmd[0] = 0x21;                                       
+//    cmd[1] = 0x2F;
+//    cmd[2] = 0x4E;    
+//	ssd1306_wr_cmd(cmd, 3U);
+//    //page 0~7
+//    cmd[0] = 0x22;                                       
+//    cmd[1] = 0x02;
+//    cmd[2] = 0x05;    
+//	ssd1306_wr_cmd(cmd, 3U);    
+//    uint8_t data[128] = {0};
+//    for(uint16_t i = 0; i< 128;data[i++] = 0xFF){
+//        ssd1306_wr_data(&data[i], 1);
+//    }
+
 }
 
 void oled_i2c_init(void){

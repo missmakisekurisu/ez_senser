@@ -1,6 +1,30 @@
 #include "oled.h"
 #include "oledfont.h"
 
+//void ssd1306_generate_a_frame(uint8_t *p, uint16_t size){	
+//	OLED_WR_CMD(0X20);	// 设置GDDRAM模式
+//    
+//	OLED_WR_CMD(0X00);	// 水平寻址模式 
+//    
+//	OLED_WR_CMD(0X21);	// 设置列起始和结束地址
+//	OLED_WR_CMD(0X00);	// 列起始地址 0
+//	OLED_WR_CMD(0X7F);	// 列终止地址 127
+//    
+//	OLED_WR_CMD(0X22);	// 设置页起始和结束地址
+//	OLED_WR_CMD(0X00);	// 页起始地址 0
+//	OLED_WR_CMD(0X07);	// 页终止地址 7
+//	
+////	for(uint8_t i=0; i<row; i++){
+////        for(uint8_t j=0; j<col; j++){
+////            ssd1306_wr_data(&p[i*row+j], 1U);
+////        }
+////    }
+//    for(uint8_t i=0; i<size; i++){
+//        OLED_WR_DATA(p[i]);
+//    }
+
+//}
+
 //几个变量声明
 uint8_t **Hzk;
 

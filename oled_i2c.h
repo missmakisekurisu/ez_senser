@@ -2,6 +2,7 @@
 #define __OLED_I2C_H
 #include "stm32f10x.h" 
 #include "delay.h"
+
 #define USE_REAL_I2C    (0)
 #if(USE_REAL_I2C)
 #define       OLED_I2Cx                       I2C1
@@ -25,9 +26,11 @@
 #define             SI2C_SDA_PIN                         GPIO_Pin_7
 
 #define SSD1306_ADDR    0x78
-
+void ssd1306_generate_a_frame(uint8_t *p, uint16_t size);
 #endif
 
 void oled_i2c_init(void);
 void HAL_I2C_Mem_Write(uint8_t DevAddress, uint8_t MemAddress,uint8_t *pData, uint16_t Size);
+
+
 #endif

@@ -6,7 +6,7 @@
 #include "delay.h"
 
 
-
+//void ssd1306_generate_a_frame(uint8_t *p, uint16_t size);
 	
 void WriteDefaultCmd(void);
 //向设备写控制命令

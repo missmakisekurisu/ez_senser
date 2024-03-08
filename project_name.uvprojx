@@ -433,6 +433,11 @@
               <FileType>5</FileType>
               <FilePath>.\oled.h</FilePath>
             </File>
+            <File>
+              <FileName>bmp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\bmp.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

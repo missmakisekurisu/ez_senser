@@ -3,6 +3,7 @@
 #include "delay.h"
 #include "oled_i2c.h"
 #include "oled.h"
+#include "bmp.h"
 
 static uint32_t test = 0;
 static uint8_t c_char[] = {'C','H','E','E','R',' ','U','P','!','\0'};
@@ -24,6 +25,7 @@ int main(){
 
     OLED_Init();
     OLED_Clear();
+    ssd1306_generate_a_frame(frog, 1024);
     for(;1;){
 #if(OLD_ONE)
         DHT11_REC_Data();
