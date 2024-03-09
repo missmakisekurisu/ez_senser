@@ -1,4 +1,5 @@
 #include "oled_i2c.h"
+#include "bmp.h"
 #if(USE_REAL_I2C)
 static void I2C_GPIO_Config(void)
 {
@@ -185,22 +186,29 @@ void ssd1306_generate_a_frame(uint8_t *p, uint16_t size){
     for(uint16_t i = 0; i< size;i++){
         ssd1306_wr_data(p[i]);
     }
-    
-//    //column 0~127
-//    cmd[0] = 0x21;                                       
-//    cmd[1] = 0x2F;
-//    cmd[2] = 0x4E;    
-//	ssd1306_wr_cmd(cmd, 3U);
-//    //page 0~7
-//    cmd[0] = 0x22;                                       
-//    cmd[1] = 0x02;
-//    cmd[2] = 0x05;    
-//	ssd1306_wr_cmd(cmd, 3U);    
-//    uint8_t data[128] = {0};
-//    for(uint16_t i = 0; i< 128;data[i++] = 0xFF){
-//        ssd1306_wr_data(&data[i], 1);
-//    }
+}
 
+static void ssd1306_set_s32_pos(uint8_t x, uint8_t y){
+    ssd1306_wr_cmd(0x20); 
+    ssd1306_wr_cmd(0x00);         		
+    //column x~x+32
+    ssd1306_wr_cmd(0x21); 
+    ssd1306_wr_cmd(x); 
+    ssd1306_wr_cmd(x+32); 
+    //page 0~7
+    ssd1306_wr_cmd(0x22); 
+    ssd1306_wr_cmd(y); 
+    ssd1306_wr_cmd(y+4);  
+}
+static void ssd1306_show_my_s32_char(uint8_t charNum){
+     for(uint16_t i = 0; i< 128;i++){
+        ssd1306_wr_data(hugeFontS32[charNum][i]);
+    }
+}
+
+void test_oled(void){
+    ssd1306_set_s32_pos(47, 1);
+    ssd1306_show_my_s32_char(0);
 }
 
 void oled_i2c_init(void){

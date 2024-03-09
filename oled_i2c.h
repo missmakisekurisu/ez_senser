@@ -27,6 +27,8 @@
 
 #define SSD1306_ADDR    0x78
 void ssd1306_generate_a_frame(uint8_t *p, uint16_t size);
+
+void test_oled(void);
 #endif
 
 void oled_i2c_init(void);
