@@ -25,17 +25,11 @@ int main(){
 
     OLED_Init();
     OLED_Clear();
-    //ssd1306_generate_a_frame(frog, 1024);
-    test_oled();
-    
-    for(;1;){
-#if(OLD_ONE)
-        DHT11_REC_Data();
-#else       
+
+    //test_oled();    
+    for(;1;){      
         DHT11_main_task();
         display_humidity_temperature();
-      
-#endif
         test++;
     }
     return 0;

@@ -3,7 +3,7 @@
 #include "stm32f10x.h" 
 #include "delay.h"
 
-#define USE_REAL_I2C    (0)
+#define USE_REAL_I2C    (1)
 #if(USE_REAL_I2C)
 #define       OLED_I2Cx                       I2C1
 #define       OLED_I2C_APBxClock_FUN          RCC_APB1PeriphClockCmd

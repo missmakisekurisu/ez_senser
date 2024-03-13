@@ -175,6 +175,11 @@
           <WinNumber>1</WinNumber>
           <ItemText>rec_data,0x0A</ItemText>
         </Ww>
+        <Ww>
+          <count>5</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>recDataDHT11</ItemText>
+        </Ww>
       </WatchWindow1>
       <MemoryWindow1>
         <Mm>

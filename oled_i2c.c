@@ -74,7 +74,7 @@ void HAL_I2C_Mem_Write(uint8_t DevAddress, uint8_t MemAddress,uint8_t *pData, ui
 #define READ_SDA      GPIO_ReadInputDataBit(SI2C_PORT, SI2C_SDA_PIN)
 
 
-#define SI2C_HALF_PERIOD    (1U)
+#define SI2C_HALF_PERIOD    (2U)
 #define SI2C_GENERATE_START {SET_SCL;SET_SDA;delay_us(SI2C_HALF_PERIOD);RESET_SDA;    RESET_SCL;delay_us(SI2C_HALF_PERIOD);}
 #define SI2C_GENERATE_STOP  {SET_SCL    ;SET_SDA;delay_us(SI2C_HALF_PERIOD);}
 #define SI2C_IGNORE_ACK     {RESET_SDA;SET_SCL;delay_us(SI2C_HALF_PERIOD);RESET_SCL;delay_us(SI2C_HALF_PERIOD);}
